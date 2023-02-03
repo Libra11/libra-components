@@ -1,11 +1,6 @@
 <template>
   <div>
-    <l-dialog
-      :width="800"
-      :height="400"
-      :visible="showDialog"
-      @update:visible="close"
-    >
+    <l-dialog :width="800" :height="400" :visible="showDialog" @update:visible="close">
       <div>dialog content</div>
       <button @click="close">close</button>
     </l-dialog>
@@ -27,4 +22,6 @@ const close = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
