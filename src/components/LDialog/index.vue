@@ -1,24 +1,25 @@
 <template>
-  <div>
+  <div class="modal-container">
     <transition name="fade">
-      <div class="modal-overlay" v-if="visible" @click="handleClose"></div>
+      <div class="modal-overlay" v-show="visible" @click="handleClose"></div>
     </transition>
     <transition name="pop">
-      <div class="modal" v-if="visible" ref="modal">
+      <div class="modal" v-show="visible" ref="modal">
         <div class="header" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
           <!-- 拖拽区域 -->
           header
         </div>
-        <h1>Vue Transitions</h1>
-        <p>The <code>&lt;transition&gt;</code> component in Vue can create wonderful animated entrances and exits.</p>
+        <div class="body">
+          <slot />
+        </div>
       </div>
     </transition>
   </div>
 </template>
 
-<script lang="ts" setup>import { reactive, ref } from 'vue';
-
-defineProps({
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const props = defineProps({
   width: {
     type: Number,
     default: 400,
@@ -36,8 +37,11 @@ defineProps({
 const state = reactive({
   x: 0,
   y: 0,
+  width: `${props.width}px`,
+  height: `${props.height}px`,
   isDragging: false,
 });
+
 
 const emit = defineEmits(["update:visible"]);
 
@@ -68,38 +72,40 @@ function handleMouseUp() {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .modal {
-  position: absolute;
+  // 居中
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  text-align: center;
-  width: fit-content;
-  height: fit-content;
-  max-width: 22em;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-  background: #FFF;
-  z-index: 999;
-  transform: none;
+  top: calc(50% - v-bind('state.height') / 2);
+  left: calc(50% - v-bind('state.width') / 2);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px $shadow-color;
+  background: $white-color;
+  z-index: 2;
+  width: v-bind('state.width');
+  height: v-bind('state.height');
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header {
+    width: 100%;
+    height: 2rem;
+    background: $black-color;
+    cursor: move;
+  }
 }
 
 .modal-overlay {
-  content: '';
-  position: absolute;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 998;
-  background: #2c3e50;
-  opacity: 0.6;
+  z-index: 1;
+  background-color: rgba($color: $black-color, $alpha: 0.2);
+  backdrop-filter: blur(20px);
   cursor: pointer;
 }
 

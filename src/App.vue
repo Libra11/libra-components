@@ -1,10 +1,11 @@
 <template>
   <div>
-    <l-dialog :width="800" :height="400" :visible="showDialog" @update:visible="close">
+    <l-dialog :width="400" :height="300" :visible="showDialog" @update:visible="close">
       <div>dialog content</div>
       <button @click="close">close</button>
     </l-dialog>
     <button @click="handleShowDialog">show dialog</button>
+    <div class="ball"></div>
   </div>
 </template>
 
@@ -23,5 +24,13 @@ const close = () => {
 </script>
 
 <style scoped>
-
+.ball {
+  width: 800px;
+  height: 800px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
