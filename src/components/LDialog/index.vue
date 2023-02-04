@@ -5,10 +5,13 @@
     </transition>
     <transition name="pop">
       <div class="modal" v-show="visible" ref="modal">
-        <div class="header" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
+        <header class="header" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
           <!-- 拖拽区域 -->
-          header
-        </div>
+          <div class="title">
+            {{ title }}
+          </div>
+          <Close class="close-btn" @click="handleClose" />
+        </header>
         <div class="body">
           <slot />
         </div>
@@ -19,6 +22,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+import Close from '@svgs/close-2.svg?component';
 const props = defineProps({
   width: {
     type: Number,
@@ -31,6 +35,10 @@ const props = defineProps({
   visible: {
     type: Boolean,
     default: false,
+  },
+  title: {
+    type: String,
+    default: '标题',
   },
 });
 
@@ -91,9 +99,43 @@ function handleMouseUp() {
 
   .header {
     width: 100%;
-    height: 2rem;
-    background: $black-color;
+    height: 60px;
+    background: $white-color;
     cursor: move;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      color: $heading-color;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+    }
+
+    .close-btn {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      transition: fill 0.3s;
+      padding-right: 20px;
+
+      &:hover {
+        fill: $primary-color;
+        transition: fill 0.3s;
+      }
+    }
+  }
+
+  .body {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px 20px 20px;
   }
 }
 

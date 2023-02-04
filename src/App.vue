@@ -1,6 +1,6 @@
 <template>
   <div>
-    <l-dialog :width="400" :height="300" :visible="showDialog" @update:visible="close">
+    <l-dialog :width="400" :height="300" title="我是标题" :visible="showDialog" @update:visible="close">
       <div>dialog content</div>
       <button @click="close">close</button>
     </l-dialog>
@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { LDialog } from "./components";
+import { LDialog } from "@/components";
 
 const showDialog = ref(false);
 
